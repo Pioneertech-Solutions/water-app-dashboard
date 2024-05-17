@@ -27,6 +27,9 @@ FROM nginx:alpine
 # Copia los archivos construidos desde la etapa de construcción
 COPY --from=build /app/dist /usr/share/nginx/html
 
+# Copia la configuración de Nginx
+COPY .docker/nginx.conf /etc/nginx/nginx.conf
+
 # Exponer el puerto 80
 EXPOSE 80
 
