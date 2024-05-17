@@ -1,15 +1,34 @@
-FROM node:18.17
+# Etapa 1: Construir la aplicación con Node.js
+FROM node:18.20 as build
 
-# Update npm
-RUN npm install --location=global npm@10.6.0
+# Actualiza npm
+RUN npm install --location=global npm@latest
 
-# Create app directory
+# Establece el directorio de trabajo
 WORKDIR /app
 
-COPY package.json ./package.json
-COPY .docker/start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
+# Copia los archivos de configuración de npm
+COPY package.json package-lock.json ./
 
-EXPOSE 3000
+# Instala las dependencias
+RUN npm ci
 
-CMD ["/usr/local/bin/start.sh"]
+# Copia el resto de los archivos del proyecto
+COPY . .
+
+# Construye la aplicación
+RUN npm run build
+
+RUN ls -la /app/dist
+
+# Etapa 2: Servir los archivos estáticos con Nginx
+FROM nginx:alpine
+
+# Copia los archivos construidos desde la etapa de construcción
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Comando para correr Nginx
+CMD ["nginx", "-g", "daemon off;"]
