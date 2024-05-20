@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "favicon.ico", "robots.txt", "apple-touch-icon.png"],
+      includeAssets: ["favicon.ico"],
       manifest: {
         name: "Panel administrador de agua",
         short_name: "Water dashboard",

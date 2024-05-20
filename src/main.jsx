@@ -6,7 +6,6 @@ import "./index.css";
 import "leaflet/dist/leaflet.css";
 import "@splidejs/react-splide/css";
 import { Toaster } from "react-hot-toast";
-import { PwaInstallPrompt } from "./components/ui/pwa.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
