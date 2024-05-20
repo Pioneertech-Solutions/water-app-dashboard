@@ -35,13 +35,13 @@ export default defineConfig({
         ],
       },
       injectRegister: 'auto',
-      devOptions: {
-        enabled: true,
-      },
-      workbox: {
-        skipWaiting: true,
-        clientsClaim: true,
-      },
+      // devOptions: {
+      //   enabled: true,
+      // },
+      // workbox: {
+      //   skipWaiting: true,
+      //   clientsClaim: true,
+      // },
     })
   ],
 })

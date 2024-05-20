@@ -29,3 +29,5 @@ deploy_firebase
 # env
 .env.production
 .env.development
+
+dev-dist
