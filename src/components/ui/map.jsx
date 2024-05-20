@@ -94,7 +94,7 @@ const MapPolygons = ({ map_items = [], callback }) => {
         <Polygon
           key={item.dwelling_uuid}
           color={
-            item.color === "gray" ? (dark ? "#4a4a4a" : "gray") : item.color
+            item.color === "gray" ? (dark ? "#4a4a4a" : item.color) : item.color
           }
           //color={dwelling.color}
           fillOpacity={0.5}
