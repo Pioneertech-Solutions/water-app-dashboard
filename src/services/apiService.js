@@ -10,253 +10,162 @@ class Api {
   }
 
   async get(path) {
-    try {
-      const response = await this.api.get(path);
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    return await this.api.get(path);
   }
 
   async post(path, data) {
-    try {
-      const response = await this.api.post(path, data);
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await this.api.post(path, data);
+    return response;
   }
 
   dwelling = {
     get: async () => {
-      try {
-        const response = await this.api.get("/dwellings");
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      return await this.api.get("/dwellings");
     },
     getTitle: async (uuid) => {
-      try {
-        const response = await this.api.get(`/dwellings/${uuid}/title`);
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      return await this.api.get(`/dwellings/${uuid}/title`);
     },
     find: async (uuid) => {
-      try {
-        const response = await this.api.get(`/dwellings/${uuid}`);
-        return {
-          ...response,
-          data: new Dwelling(response.data),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(`/dwellings/${uuid}`);
+      return {
+        ...response,
+        data: new Dwelling(response.data),
+      };
     },
     findByCoordinatesUuid: async (coordinates_uuid) => {
-      try {
-        const response = await this.api.get(
-          `/dwellings?coordinates_uuid=${coordinates_uuid}`
-        );
+      const response = await this.api.get(
+        `/dwellings?coordinates_uuid=${coordinates_uuid}`
+      );
 
-        return {
-          ...response,
-          data: response.data.map((item) => new Dwelling(item))[0] || null,
-        };
-      } catch (error) {
-        throw error;
-      }
+      return {
+        ...response,
+        data: response.data.map((item) => new Dwelling(item))[0] || null,
+      };
     },
     changeInhabited: async (uuid) => {
-      try {
-        const response = await this.api.post(
-          `/dwellings/${uuid}/inhabited?_method=PATCH`
-        );
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.post(
+        `/dwellings/${uuid}/inhabited?_method=PATCH`
+      );
+      return response;
     },
     getLastContribution: async (uuid) => {
-      try {
-        const response = await this.api.get(
-          `/dwellings/${uuid}/last-contribution`
-        );
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(
+        `/dwellings/${uuid}/last-contribution`
+      );
+      return response;
     },
     getContributions: async (uuid) => {
-      try {
-        const response = await this.api.get(`/dwellings/${uuid}/contributions`);
-        return {
-          ...response,
-          data: response.data.map((item) => new Contribution(item)),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(`/dwellings/${uuid}/contributions`);
+      return {
+        ...response,
+        data: response.data.map((item) => new Contribution(item)),
+      };
     },
     getPendingPeriods: async (uuid) => {
-      try {
-        const response = await this.api.get(
-          `/dwellings/${uuid}/pending-periods`
-        );
-        return {
-          ...response,
-          data: response.data.map((item) => new Period(item)),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(
+        `/dwellings/${uuid}/pending-periods`
+      );
+      return {
+        ...response,
+        data: response.data.map((item) => new Period(item)),
+      };
     },
     getNeighbors: async (uuid) => {
-      try {
-        const response = await this.api.get(`/dwellings/${uuid}/neighbors`);
-        return {
-          ...response,
-          data: response.data.map((item) => new Neighbor(item)),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(`/dwellings/${uuid}/neighbors`);
+      return {
+        ...response,
+        data: response.data.map((item) => new Neighbor(item)),
+      };
     },
     createNeighbor: async (uuid, data) => {
-      try {
-        const response = await this.api.post(
-          `/dwellings/${uuid}/neighbors`,
-          data
-        );
-        return {
-          ...response,
-          data: new Neighbor(response.data),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.post(
+        `/dwellings/${uuid}/neighbors`,
+        data
+      );
+      return {
+        ...response,
+        data: new Neighbor(response.data),
+      };
     },
     createPeriod: async (uuid, data) => {
-      try {
-        const response = await this.api.post(`/dwellings/${uuid}/period`, data);
-        return {
-          ...response,
-          data: new Period(response.data),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.post(`/dwellings/${uuid}/period`, data);
+      return {
+        ...response,
+        data: new Period(response.data),
+      };
     },
   };
 
   neighbor = {
     find: async (uuid) => {
-      try {
-        const response = await this.api.get(`/neighbors/${uuid}`);
-        return {
-          ...response,
-          data: new Neighbor(response.data),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(`/neighbors/${uuid}`);
+      return {
+        ...response,
+        data: new Neighbor(response.data),
+      };
     },
     delete: async (uuid) => {
-      try {
-        const response = await this.api.post(
-          `/neighbors/${uuid}?_method=DELETE`
-        );
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.post(
+        `/neighbors/${uuid}?_method=DELETE`
+      );
+      return response;
     },
     update: async (uuid, data) => {
-      try {
-        const response = await this.api.post(
-          `/neighbors/${uuid}?_method=PUT`,
-          data
-        );
-        return {
-          ...response,
-          data: new Neighbor(response.data),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.post(
+        `/neighbors/${uuid}?_method=PUT`,
+        data
+      );
+      return {
+        ...response,
+        data: new Neighbor(response.data),
+      };
     },
   };
 
   contribution = {
     get: async () => {
-      try {
-        const response = await this.api.get("/contributions");
-        return {
-          ...response,
-          data: response.data.map((item) => new Contribution(item)),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get("/contributions");
+      return {
+        ...response,
+        data: response.data.map((item) => new Contribution(item)),
+      };
     },
     getNeighborName: async (contribution_uuid) => {
-      try {
-        const response = await this.api.get(
-          `/contributions/${contribution_uuid}/neighbor-name`
-        );
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(
+        `/contributions/${contribution_uuid}/neighbor-name`
+      );
+      return response;
     },
     find: async (uuid) => {
-      try {
-        const response = await this.api.get(`/contributions/${uuid}/?admin=1`);
-        return {
-          ...response,
-          data: new Contribution(response.data),
-        };
-      } catch (error) {
-        throw error;
-      }
-    }
+      const response = await this.api.get(`/contributions/${uuid}/?admin=1`);
+      return {
+        ...response,
+        data: new Contribution(response.data),
+      };
+    },
   };
 
   period = {
     find: async (uuid) => {
-      try {
-        const response = await this.api.get(`/periods/${uuid}`);
-        return {
-          ...response,
-          data: new Period(response.data),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get(`/periods/${uuid}`);
+      return {
+        ...response,
+        data: new Period(response.data),
+      };
     },
     delete: async (uuid) => {
-      try {
-        const response = await this.api.post(`/periods/${uuid}?_method=DELETE`);
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.post(`/periods/${uuid}?_method=DELETE`);
+      return response;
     },
   };
 
   map = {
     contribuions: async () => {
-      try {
-        const response = await this.api.get("/map/contributions");
-        return {
-          ...response,
-          data: response.data.map((item) => new MapItem(item)),
-        };
-      } catch (error) {
-        throw error;
-      }
+      const response = await this.api.get("/map/contributions");
+      return {
+        ...response,
+        data: response.data.map((item) => new MapItem(item)),
+      };
     },
   };
 }

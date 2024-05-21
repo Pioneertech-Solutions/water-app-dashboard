@@ -31,13 +31,13 @@ export const DwellingCard = ({ data: dwelling, isLoading }) => {
   const navigate = useNavigate();
   if (isLoading)
     return (
-      <Skeleton className="h-56 w-full rounded-3xl bg-gray-50 dark:bg-gray-700" />
+      <Skeleton className="h-56 w-full min-[600px]:rounded-3xl bg-gray-50 dark:bg-gray-700" />
     );
   if (!dwelling) return <div>Error al obtener los datos.</div>;
 
   return (
     <motion.div
-      className="h-56 bg-gray-50 dark:bg-gray-700 shadow-lg rounded-3xl relative px-4 py-2"
+      className="relative"
       initial={{ scale: 0.7, translateY: 30 }}
       animate={{ scale: [1.05, 1], translateY: 0 }}
     >

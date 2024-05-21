@@ -1,16 +1,18 @@
-FROM node:18.17
+FROM node:18.20
 
-# Update npm
-RUN npm install --location=global npm@10.6.0
+# actualizar npm global
+RUN npm install -g npm@latest
 
-# Create app directory
+# copiar start.sh para el contenedor
+COPY .docker/start.sh /usr/local/bin/start.sh
+
+# asignar permisos de ejecución al script
+RUN chmod +x /usr/local/bin/start.sh
+
 WORKDIR /app
 
-COPY package.json ./package.json
-COPY .env.example ./.env.production
-COPY .env.example ./.env.development
-COPY .docker/start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
+# copiar package.json y package-lock.json
+COPY package*.json ./
 
 EXPOSE 3000
 

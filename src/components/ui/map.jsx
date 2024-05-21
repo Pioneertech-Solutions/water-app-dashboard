@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, useMap, Polygon } from "react-leaflet";
+import { MapContainer, TileLayer, useMap, Polygon, ZoomControl } from "react-leaflet";
 import coordinatesData from "../../assets/jsons/coordinates.json";
 import structures from "../../assets/jsons/structures.json";
 import L from "leaflet";
 import "leaflet.markercluster";
 import { useDark } from "../../hooks";
+import { Spinner } from "@nextui-org/react";
 
 export function Map({ children }) {
   const { dark } = useDark();
@@ -36,6 +37,7 @@ export function Map({ children }) {
         maxZoom={22}
       />
       <StructuresPolygons />
+      <ZoomControl position="bottomleft" />
       {children}
     </MapContainer>
   );
@@ -74,7 +76,9 @@ function StructuresPolygons() {
 export function MapContributions({ data, isLoading, error, callback }) {
   if (isLoading)
     return (
-      <div className="flex items-center justify-center h-full animate-pulse">Cargando mapa...</div>
+      <div className="flex items-center justify-center h-full w-full text-center animate-pulse">
+        <Spinner size="sm" className="mr-2" /> Cargando mapa...
+      </div>
     );
 
   if (!data || error) return <div>Error al obtener los datos.</div>;
