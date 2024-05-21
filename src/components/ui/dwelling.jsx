@@ -29,10 +29,6 @@ import { IoIosSettings } from "react-icons/io";
 
 export const DwellingCard = ({ data: dwelling, isLoading }) => {
   const navigate = useNavigate();
-  if (isLoading)
-    return (
-      <Skeleton className="h-56 w-full min-[600px]:rounded-3xl bg-gray-50 dark:bg-gray-700" />
-    );
   if (!dwelling) return <div>Error al obtener los datos.</div>;
 
   return (
@@ -108,7 +104,7 @@ const DwellingStatus = ({ dwelling }) => {
 
 const ActionButton = ({ neighbors_count }) => {
   return (
-    <Button color="primary" className="bg-blue-600">
+    <Button color="primary" className="bg-[#fff700] text-gray-900">
       Registrar {neighbors_count > 0 ? "contribución" : "vecino"}
     </Button>
   );
@@ -126,7 +122,7 @@ export const InhabitedButton = ({ onClick, data, isLoading, error }) => {
       disabled={isLoading}
       onClick={onClick}
       className={`${
-        data ? "bg-sky-500" : "bg-gray-800"
+        data ? "bg-sky-500" : "bg-gray-700"
       } w-full h-full rounded-xl p-2 text-white font-semibold text-xs text-center flex items-center justify-center`}
     >
       <div>

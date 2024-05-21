@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, useMap, Polygon, ZoomControl } from "react-leaflet";
+import { MapContainer, TileLayer, useMap, Polygon } from "react-leaflet";
 import coordinatesData from "../../assets/jsons/coordinates.json";
 import structures from "../../assets/jsons/structures.json";
 import L from "leaflet";
@@ -37,7 +37,6 @@ export function Map({ children }) {
         maxZoom={22}
       />
       <StructuresPolygons />
-      <ZoomControl position="bottomleft" />
       {children}
     </MapContainer>
   );

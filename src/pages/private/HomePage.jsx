@@ -10,12 +10,12 @@ export default function HomePage() {
       initial={{ scale: 0.7, translateY: 30 }}
       animate={{ scale: [1.05, 1], translateY: 0 }}
     >
-      <main className="flex w-full h-[70vh] relative">
+      <main className="flex w-full h-screen relative">
         <MapContributionsContainer callback={setDwellingUuid} />
       </main>
 
-      <section className="w-full min-[600px]:w-[500px] sm:w-[450px] z-[99999]">
-        <div className="h-[30vh] bg-gray-50 dark:bg-gray-700 shadow-lg min-[600px]:rounded-3xl py-2 pt-5 px-5">
+      <section className="w-full sm:w-[450px] fixed left-0 bottom-0 z-[99999] sm:p-5">
+        <div className="h-[30vh] sm:h-56 bg-gray-800 shadow-lg rounded-t-3xl sm:rounded-3xl py-2 pt-5 px-5">
           {dwellingUuid ? (
             <DwellingCardContainer dwelling_uuid={dwellingUuid} />
           ) : (
