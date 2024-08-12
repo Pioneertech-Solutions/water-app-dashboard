@@ -1,6 +1,7 @@
 import { useApi } from "../../hooks";
-import { DeleteNeighbor, EditNeighborPage } from "../ui/neighbor";
+import {DeleteNeighbor, EditNeighborPage, SearchNeighbor} from "../ui/neighbor";
 import apiService from "../../services/apiService";
+import {useEffect, useState} from "react";
 
 export function EditNeighborPageContainer({ neighbor_uuid }) {
   const query = useApi({
@@ -31,4 +32,28 @@ export function DeleteNeighborContainer({ neighbor_uuid, refetch: refetch_neighb
   });
 
   return <DeleteNeighbor {...query} refetch_neighbors={refetch_neighbors} />;
+}
+
+export function SearchNeighborContainer() {
+  const [search, setSearch] = useState("");
+  const [timeId, setTimeId] = useState(null);
+  const query = useApi({
+    sendDataFunction: (search) => apiService.neighbor.search(search),
+  });
+
+  useEffect(() => {
+    if (timeId) {
+      clearTimeout(timeId);
+    }
+
+    setTimeId(setTimeout(() => {
+      query.sendData(search);
+    }, 500));
+  }, [search]);
+
+  useEffect(() => {
+    console.log(query.data);
+  }, [query.data]);
+
+  return <SearchNeighbor search={search} setSearch={setSearch} {...query} />;
 }

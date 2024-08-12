@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import { useAuth, useDark } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import { BsList } from "react-icons/bs";
@@ -9,6 +9,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { UserAvatarContainer } from "../../components/containers/userContainers";
+import {SearchNeighborContainer} from "../containers/neighborContainers.jsx";
 
 export default function AppLayout() {
   return (
@@ -26,6 +27,8 @@ export default function AppLayout() {
 
 const Navbar = () => {
   const { logout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <nav className="w-full min-[600px]:w-[500px] sm:w-[450px] h-14 bg-gray-50 dark:bg-gray-700 shadow-lg flex items-center justify-center px-3 rounded-full">
@@ -49,16 +52,18 @@ const Navbar = () => {
             </DropdownMenu>
           </Dropdown>
 
-          <input
-            type="text"
-            className="bg-transparent outline-none w-full placeholder:text-gray-400 ml-3"
-            placeholder="Busca un lugar..."
-          />
+          <SearchNeighborContainer />
         </div>
 
-        <button className="text-3xl text-gray-500 ml-3">
-          <BsList />
-        </button>
+        {location.pathname !== '/search' ? (
+          <button className="text-3xl text-gray-500 ml-3">
+            <BsList/>
+          </button>
+        ) : (
+          <button className="text-3xl text-gray-500 ml-3" onClick={() => navigate(-1)}>
+            <BsList/>
+          </button>
+        )}
       </div>
     </nav>
   );

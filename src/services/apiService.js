@@ -120,6 +120,28 @@ class Api {
         data: new Neighbor(response.data),
       };
     },
+    search: async (query) => {
+      // validar que sea de tipo string
+      if (typeof query !== "string") {
+        console.log(typeof query, query);
+
+        return {
+          data: [],
+        };
+      }
+
+      if (!query || query.length < 3) {
+        return {
+          data: [],
+        };
+      }
+
+      console.log(query);
+      const response = await this.api.get(`/neighbors/search?query=${query}`);
+      return {
+        ...response,
+      };
+    }
   };
 
   contribution = {
@@ -140,7 +162,7 @@ class Api {
       const response = await this.api.get(`/contributions/${uuid}/?admin=1`);
       return {
         ...response,
-        data: new Contribution(response.data),
+        data: new Contribution(response.data)
       };
     },
   };

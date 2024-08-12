@@ -1,6 +1,6 @@
 import { Button, Input, Skeleton } from "@nextui-org/react";
 import { PhoneFormat } from "./formats";
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { H1 } from "./text";
 import { useEffect, useState } from "react";
 import { DeleteNeighborContainer } from "../containers/neighborContainers";
@@ -191,6 +191,72 @@ export const EditNeighborPage = ({
           isSending={isSending}
         />
       </div>
+    </div>
+  );
+};
+
+export const SearchNeighbor = ({ search, setSearch, data }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = () => {
+    if (location.pathname !== "/search") {
+      navigate("/search");
+    }
+  }
+
+  return (
+    <>
+      <input
+        type="text"
+        className="bg-transparent outline-none w-full placeholder:text-gray-400 ml-3"
+        placeholder="Busca un venico..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        onClick={handleClick}
+      />
+
+      {location.pathname === '/search' && (
+        <div
+          className={'fixed top-20 w-full bg-dark left-1/2 transform -translate-x-1/2 px-5 h-full py-5 overflow-y-auto'}>
+          <div className={'grid gap-3'}>
+            {data?.map((neighbor) => (
+              <NeighborItem key={neighbor.uuid} {...neighbor} />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+const NeighborItem = (neighbor) => {
+  const navigate = useNavigate();
+  /*
+    neighbor.firstname
+    neighbor.lastname
+    neighbor.phone_number
+    neighbor.dwellings[0].title
+  */
+
+  const handleClick = () => {
+    // go to dwelling page with neighbor.dwellings[0].uuid
+    if (neighbor.dwellings.length === 0) return;
+    navigate(`/dwellings/${neighbor.dwellings[0].uuid}`);
+  };
+
+  return (
+    <div
+      className="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 shadow cursor-pointer"
+      onClick={handleClick}
+    >
+      <div
+        className="text-lg font-semibold capitalize"
+      >{neighbor.firstname} {neighbor.lastname}</div>
+      <div
+        className={'text-sm text-blue-500 border-b pb-2 mb-2'}
+      >{neighbor.phone_number}</div>
+      <div className={'capitalize'}>{neighbor.dwellings[0].title}</div>
     </div>
   );
 };
