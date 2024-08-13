@@ -121,25 +121,41 @@ class Api {
       };
     },
     search: async (query) => {
-      // validar que sea de tipo string
+      // Validar que sea de tipo string
       if (typeof query !== "string") {
         console.log(typeof query, query);
-
         return {
           data: [],
         };
       }
-
+    
+      // Validar que el query tenga al menos 3 caracteres
       if (!query || query.length < 3) {
         return {
           data: [],
         };
       }
+    
+      // Dividir el query por espacios
+      // Eliminar espacios iniciales y finales
+      const palabras = query.split(" ").map(palabra => palabra.trim()).filter(palabra => palabra.length > 0);
 
-      console.log(query);
-      const response = await this.api.get(`/neighbors/search?query=${query}`);
+      
+    
+      // Realizar una solicitud por cada palabra y almacenar los resultados
+      const resultados = await Promise.all(
+        palabras.map(async (palabra) => {
+          const response = await this.api.get(`/neighbors/search?query=${palabra}`);
+          return response.data; // Asumiendo que la respuesta contiene los datos en la propiedad 'data'
+        })
+      );
+    
+      // Combinar los resultados y eliminar duplicados
+      const datosCombinados = resultados.flat();
+      const datosUnicos = Array.from(new Set(datosCombinados.map(item => JSON.stringify(item)))).map(item => JSON.parse(item));
+    
       return {
-        ...response,
+        data: datosUnicos,
       };
     }
   };
