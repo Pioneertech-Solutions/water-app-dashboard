@@ -210,7 +210,7 @@ export const SearchNeighbor = ({ search, setSearch, data }) => {
       <input
         type="text"
         className="bg-transparent outline-none w-full placeholder:text-gray-400 ml-3"
-        placeholder="Busca un venico..."
+        placeholder="Busca un vecino..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onClick={handleClick}
